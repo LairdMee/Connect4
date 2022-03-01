@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Board from './components/Board';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isGameOver: false, /* isGameOver is a prop*/
+      restartGame: false,
+    }
+  }
+
+  setGameOver() {
+    this.setState({isGameOver: true});
+  }
+
+  setRestartGame() {
+    this.setState({restartGame: true, isGameOver: false});
+  }
+
+  render() {
+    return <div>
+      <h5 style={{marginBottom: '1rem'}}>App Component</h5>
+      <Board
+        gameOver={() => this.setGameOver()}
+        isGameOver={this.state.isGameOver} 
+        restart={this.state.restartGame}
+      />
+
+      {this.state.isGameOver && (
+        <>
+          <h5 style={{marginTop: '1rem'}}>Game Over!</h5>
+          <button onClick={() => this.setRestartGame()}>Start New Game</button>
+        </>
+      )}
     </div>
-  );
+  }
 }
 
 export default App;
+
+
+
